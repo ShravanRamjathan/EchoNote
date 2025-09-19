@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.dp
 import com.echonote.ui.theme.EchoNoteTheme
 
 @Composable
-fun HomeScreen(padding: PaddingValues) {
+fun HomeScreen(padding: PaddingValues, onNavigateToVoice:()-> Unit) {
     val temp: String = "Shravan"
     Column(modifier = Modifier.padding(padding)) {
         Banner("Echo Note", temp)
@@ -48,9 +48,9 @@ fun HomeScreen(padding: PaddingValues) {
                 verticalArrangement = Arrangement.SpaceEvenly
             ) {
 
-                HomeButton("Add a note")
-                HomeButton("Note Templates")
-                HomeButton("Voice record")
+                HomeButton("Add a note", onNavigate = {})
+                HomeButton("Note Templates", onNavigate = {})
+                HomeButton("Voice record", onNavigate = {onNavigateToVoice()})
             }
 
         }
@@ -86,9 +86,9 @@ fun Banner(heading: String, username: String) {
 
 // refactor the icon
 @Composable
-fun HomeButton(content: String, modifier: Modifier = Modifier) {
+fun HomeButton(content: String, modifier: Modifier = Modifier, onNavigate:()->Unit) {
     ElevatedButton(
-        onClick = {},
+        onClick = {onNavigate()},
         elevation = ButtonDefaults.buttonElevation(10.dp),
         modifier = Modifier.defaultMinSize(minWidth = 200.dp).height(80.dp),
 
