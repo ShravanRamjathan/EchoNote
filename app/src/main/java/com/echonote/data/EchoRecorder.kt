@@ -24,9 +24,11 @@ class EchoRecorder(@ApplicationContext private val ctx: Context) : AudioRecorder
         recorder = MediaRecorder(ctx)
             .apply {
                 setAudioSource(MediaRecorder.AudioSource.MIC)
-                setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
+                setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
                 setOutputFile(outPutFilePath)
-                setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
+                setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
+                setAudioEncodingBitRate(128000)
+                setAudioSamplingRate(44100)
                 try {
                     prepare()
                 } catch (e: Exception) {

@@ -41,9 +41,9 @@ fun VoiceRecordingScreen(
 }
 
 @Composable
-fun VoiceInput(onRecord: () -> Unit, stopRecording: () -> Unit, playRecording: () -> Unit) {
+fun VoiceInput(onRecord: () -> Unit, stopRecording: () -> Boolean, playRecording: () -> Unit) {
     val interactionSource = remember { MutableInteractionSource() }
-    val isPressed = interactionSource.collectIsPressedAsState()
+    var recording = remember{mutableStateOf(false)}
     var isFileSaved = remember { mutableStateOf(false) }
     Row(
         modifier = Modifier
@@ -55,25 +55,25 @@ fun VoiceInput(onRecord: () -> Unit, stopRecording: () -> Unit, playRecording: (
             modifier = Modifier
                 .width(100.dp)
                 .height(40.dp), onClick = {
-                if (isPressed.value) {
+                if (  recording.value==false) {
                     onRecord()
-
+                    recording.value=true
                 } else {
-                    stopRecording()
-                    isFileSaved.value = !isFileSaved.value
+                   isFileSaved.value= stopRecording()
+
                 }
             }, interactionSource = interactionSource
         ) {
-            if (isPressed.value) {
-                Text("Recording")
+            if (  recording.value==false  ) {
+                Text("Record")
             } else {
-                Icon(Icons.Default.PlayArrow, "Record or something")
+               Text("Recording...")
             }
 
         }
 
         Button(
-            enabled = isFileSaved.value,
+            enabled = isFileSaved.value ,
             modifier = Modifier
                 .width(100.dp)
                 .height(40.dp), onClick = {
