@@ -26,7 +26,7 @@ class EchoRecorder(@ApplicationContext private val ctx: Context) : AudioRecorder
                 setAudioSource(MediaRecorder.AudioSource.MIC)
                 setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
                 setOutputFile(outPutFilePath)
-                setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
+                setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
                 try {
                     prepare()
                 } catch (e: Exception) {
@@ -42,5 +42,6 @@ class EchoRecorder(@ApplicationContext private val ctx: Context) : AudioRecorder
             stop()
             release()
         }
+        recorder=null
     }
 }

@@ -6,6 +6,7 @@ import com.echonote.data.EchoPlayer
 import com.echonote.data.EchoRecorder
 import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
 
 import dagger.hilt.android.components.ViewModelComponent
@@ -23,4 +24,6 @@ abstract class EchoMedia {
     abstract fun bindEchoPlayer(
         echoPlayer: EchoPlayer
     ): AudioPlayer
+
+
 }

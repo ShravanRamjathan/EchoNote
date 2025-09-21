@@ -5,8 +5,6 @@ import android.content.pm.PackageManager
 import android.media.MediaPlayer
 import android.media.MediaRecorder
 import android.os.Bundle
-import android.os.Environment
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -26,9 +24,6 @@ import com.echonote.presentation.viewmodel.VoiceRecordingViewModel
 import com.echonote.ui.theme.EchoNoteTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.serialization.Serializable
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
 
 
 private const val LOG_TAG = "AudioRecordTest"
@@ -70,10 +65,8 @@ class MainActivity : ComponentActivity() {
                         composable<VoiceRecordScreenRoute> {
                             VoiceRecordingScreen(
                                 voiceRecordingViewModel,
-                                applicationContext,
-                                startRecording = {startRecording()},
-                                stopRecording = {stopRecording()}
-                            )
+
+                                )
                         }
                     }
                 }
@@ -93,62 +86,6 @@ class MainActivity : ComponentActivity() {
             false
         }
         if (!permissionToRecordAccepted) return
-    }
-    fun startRecording(){
-        val audioFolder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_RECORDINGS)
-        if (!audioFolder.exists()) {
-            audioFolder.mkdirs() // Create the directory if it doesn't exist
-        }
-        val fileName = "my_audio_recording_" + System.currentTimeMillis() + ".3gp" // Or .mp4
-        val audioFile = File(audioFolder, fileName)
-        // Record to the external cache directory for visibility
-  //      val fileName = "${externalCacheDir?.absolutePath}/audiorecordtest.3gp"
-
-        recorder = MediaRecorder(applicationContext).apply {
-            setAudioSource(MediaRecorder.AudioSource.MIC)
-            setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
-            setOutputFile(audioFile.absolutePath)
-            setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
-
-            try {
-                prepare()
-            } catch (e: IOException) {
-                Log.e("voiceTag", "prepare() failed", e)
-            }
-
-            start()
-        }
-    }
-    fun stopRecording() {
-        recorder?.apply {
-            stop()
-            release()
-        }
-        recorder = null
-    }
-
-
-    private fun onPlay(start: Boolean) = if (start) {
-        startPlaying()
-    } else {
-        stopPlaying()
-    }
-
-    private fun startPlaying() {
-        player = MediaPlayer().apply {
-            try {
-                setDataSource("test")
-                prepare()
-                start()
-            } catch (e: IOException) {
-                Log.e("test", "prepare() failed")
-            }
-        }
-    }
-
-    private fun stopPlaying() {
-        player?.release()
-        player = null
     }
 }
 
