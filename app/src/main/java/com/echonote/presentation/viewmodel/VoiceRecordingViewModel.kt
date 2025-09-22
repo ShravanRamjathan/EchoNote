@@ -38,11 +38,13 @@ class VoiceRecordingViewModel @Inject constructor(
         val dir = File(ctx.filesDir, "EchoVoice")
         if (!dir.exists()) dir.mkdirs()
         val file = File(dir, "${System.currentTimeMillis()}.m4a")
+
+
+
         try {
             audioRecorder.start(file.absolutePath)
             updateFile(file, file.absolutePath)
 
-            Log.d("AudioSaved",_voiceState.value.fileName)
         } catch (e: Exception) {
             Log.e("AudioSaved", "There was an error trying to record", e)
         }
@@ -51,7 +53,8 @@ class VoiceRecordingViewModel @Inject constructor(
     fun stopRecordingAudio(): Boolean {
         try {
             audioRecorder.stop()
-            return  true
+
+            return true
         } catch (e: Exception) {
             Log.e("AudioSaved", "There was an error trying to stop recording", e)
             return false
@@ -59,7 +62,7 @@ class VoiceRecordingViewModel @Inject constructor(
     }
 
     fun playRecording() {
-        if (_voiceState.value.file?.exists()==false ) return
+        if (_voiceState.value.file?.exists() == false) return
         try {
             audioPlayer.playFile(_voiceState.value.file!!)
         } catch (e: Exception) {

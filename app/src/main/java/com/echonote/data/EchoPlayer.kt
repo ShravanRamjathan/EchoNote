@@ -25,6 +25,7 @@ class EchoPlayer(@ApplicationContext private val ctx: Context) : AudioPlayer {
     }
 
     override fun stopPlayer() {
+
        player?.stop()
         player?.release()
         player = null

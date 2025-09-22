@@ -9,10 +9,15 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.app.ActivityCompat
 import androidx.navigation.compose.NavHost
@@ -52,21 +57,25 @@ class MainActivity : ComponentActivity() {
         setContent {
             EchoNoteTheme {
                 val navController = rememberNavController()
+                val brush = Brush.horizontalGradient(listOf(Color.Red, Color.Blue))
+                Scaffold(modifier = Modifier.fillMaxSize() ,    containerColor = Color.Transparent, contentColor = Color.Transparent ) { innerPadding ->
+                    Surface(modifier = Modifier
+                        .fillMaxSize().padding(innerPadding)
+                        .background(brush)) {
+                        NavHost(navController = navController, startDestination = HomeScreenRoute) {
+                            composable<HomeScreenRoute> {
+                                HomeScreen( onNavigateToVoice = {
+                                    navController.navigate(
+                                        VoiceRecordScreenRoute
+                                    )
+                                })
+                            }
+                            composable<VoiceRecordScreenRoute> {
+                                VoiceRecordingScreen(
+                                    voiceRecordingViewModel,
 
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    NavHost(navController = navController, startDestination = HomeScreenRoute) {
-                        composable<HomeScreenRoute> {
-                            HomeScreen(innerPadding, onNavigateToVoice = {
-                                navController.navigate(
-                                    VoiceRecordScreenRoute
-                                )
-                            })
-                        }
-                        composable<VoiceRecordScreenRoute> {
-                            VoiceRecordingScreen(
-                                voiceRecordingViewModel,
-
-                                )
+                                    )
+                            }
                         }
                     }
                 }
