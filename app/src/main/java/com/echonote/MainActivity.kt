@@ -2,8 +2,6 @@ package com.echonote
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.media.MediaPlayer
-import android.media.MediaRecorder
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -43,10 +41,7 @@ object VoiceRecordScreenRoute
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private var permissions: Array<String> = arrayOf(Manifest.permission.RECORD_AUDIO)
-    private var permissionToRecordAccepted = false
-    private var recorder: MediaRecorder? = null
 
-    private var player: MediaPlayer? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -58,13 +53,20 @@ class MainActivity : ComponentActivity() {
             EchoNoteTheme {
                 val navController = rememberNavController()
                 val brush = Brush.horizontalGradient(listOf(Color.Red, Color.Blue))
-                Scaffold(modifier = Modifier.fillMaxSize() ,    containerColor = Color.Transparent, contentColor = Color.Transparent ) { innerPadding ->
-                    Surface(modifier = Modifier
-                        .fillMaxSize().padding(innerPadding)
-                        .background(brush)) {
+                Scaffold(
+                    modifier = Modifier.fillMaxSize(),
+                    containerColor = Color.Transparent,
+                    contentColor = Color.Transparent
+                ) { innerPadding ->
+                    Surface(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(innerPadding)
+                            .background(brush)
+                    ) {
                         NavHost(navController = navController, startDestination = HomeScreenRoute) {
                             composable<HomeScreenRoute> {
-                                HomeScreen( onNavigateToVoice = {
+                                HomeScreen(onNavigateToVoice = {
                                     navController.navigate(
                                         VoiceRecordScreenRoute
                                     )
