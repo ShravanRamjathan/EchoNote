@@ -4,8 +4,8 @@ package com.echonote.presentation.viewmodel
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.echonote.data.AudioPlayer
-import com.echonote.data.AudioRecorder
+import com.echonote.data.media.AudioPlayer
+import com.echonote.data.media.AudioRecorder
 import com.echonote.presentation.state.VoiceState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext

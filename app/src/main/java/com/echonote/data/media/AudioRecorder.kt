@@ -1,4 +1,4 @@
-package com.echonote.data
+package com.echonote.data.media
 
 interface AudioRecorder {
 

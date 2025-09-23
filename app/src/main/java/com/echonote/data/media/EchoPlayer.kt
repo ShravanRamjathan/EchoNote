@@ -1,9 +1,8 @@
-package com.echonote.data
+package com.echonote.data.media
 
 import android.content.Context
 import android.media.MediaPlayer
 import android.util.Log
-import androidx.core.net.toUri
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.io.File
 

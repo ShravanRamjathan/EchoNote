@@ -1,9 +1,9 @@
 package com.echonote.di
 
 import android.content.Context
-import com.echonote.data.AudioRecorder
-import com.echonote.data.EchoPlayer
-import com.echonote.data.EchoRecorder
+import com.echonote.data.media.AudioRecorder
+import com.echonote.data.media.EchoPlayer
+import com.echonote.data.media.EchoRecorder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

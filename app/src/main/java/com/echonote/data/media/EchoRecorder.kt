@@ -1,23 +1,20 @@
-package com.echonote.data
+package com.echonote.data.media
 
 import android.content.Context
-import android.media.MediaPlayer
 import android.media.MediaRecorder
 import android.os.Build
-import android.provider.MediaStore
 import android.util.Log
 import dagger.hilt.android.qualifiers.ApplicationContext
-
 
 class EchoRecorder(@ApplicationContext private val ctx: Context) : AudioRecorder {
     private var recorder: MediaRecorder? = null
 
 
-    private fun createRecorder(): MediaRecorder{
+    private fun createRecorder(): MediaRecorder {
         if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.S){
            return MediaRecorder(ctx)
         }else{
-         return   MediaRecorder()
+         return MediaRecorder()
         }
     }
     override fun start(outPutFilePath: String) {
