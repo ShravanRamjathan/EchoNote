@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import java.io.File
 import javax.inject.Inject
+import kotlin.time.ExperimentalTime
 
 
 @HiltViewModel
@@ -34,12 +35,11 @@ class VoiceRecordingViewModel @Inject constructor(
         }
     }
 
+    @OptIn(ExperimentalTime::class)
     fun startRecordingAudio() {
         val dir = File(ctx.filesDir, "EchoVoice")
         if (!dir.exists()) dir.mkdirs()
         val file = File(dir, "${System.currentTimeMillis()}.m4a")
-
-
 
         try {
             audioRecorder.start(file.absolutePath)
