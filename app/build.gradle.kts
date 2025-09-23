@@ -1,3 +1,5 @@
+import org.gradle.internal.impldep.org.bouncycastle.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -18,8 +20,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
+  }
 
     buildTypes {
         release {
@@ -69,7 +70,8 @@ dependencies {
 
     implementation("androidx.navigation:navigation-compose:$nav_version")
     val lifecycle_version = "2.9.1"
-
+    val ktor_version = "3.2.3"
+    val supabase_version = "3.2.3"
     // ViewModel
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
     // ViewModel utilities for Compose
@@ -85,5 +87,9 @@ dependencies {
     implementation ("androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version")
     implementation("com.squareup.retrofit2:retrofit:3.0.0")
 
+    implementation(platform("io.github.jan-tennert.supabase:bom:$supabase_version"))
+    implementation("io.github.jan-tennert.supabase:postgrest-kt")
+    implementation("io.github.jan-tennert.supabase:storage-kt")
+    implementation("io.ktor:ktor-client-android:$ktor_version")
 
 }
