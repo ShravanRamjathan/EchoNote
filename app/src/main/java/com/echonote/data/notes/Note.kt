@@ -5,8 +5,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Note(
-    val id: Int = 0,
-    val created_at: LocalDateTime?,
+    val id: Int? = null,
+    val created_at: LocalDateTime? = null ,
     val title: String = "",
     val content: String = "",
     val image_urls: List<String> = emptyList<String>(),

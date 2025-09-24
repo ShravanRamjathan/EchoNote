@@ -11,7 +11,7 @@ plugins {
 
 android {
     namespace = "com.echonote"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.echonote"
@@ -60,7 +60,8 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-
+    implementation("androidx.compose.material3:material3:1.4.0-alpha14")
+    implementation("androidx.compose.material:material-icons-core:1.7.8")
     implementation("com.google.dagger:hilt-android:2.56.2")
     ksp("com.google.dagger:hilt-android-compiler:2.56.2")
 

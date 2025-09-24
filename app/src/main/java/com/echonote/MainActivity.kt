@@ -22,11 +22,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.echonote.presentation.screen.HomeScreen
+import com.echonote.presentation.screen.NoteScreen
 import com.echonote.presentation.screen.VoiceRecordingScreen
+import com.echonote.presentation.viewmodel.NotesViewModel
 import com.echonote.presentation.viewmodel.VoiceRecordingViewModel
 import com.echonote.ui.theme.EchoNoteTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.serialization.Serializable
+import java.io.Serial
 
 
 private const val LOG_TAG = "AudioRecordTest"
@@ -38,6 +41,8 @@ object HomeScreenRoute
 @Serializable
 object VoiceRecordScreenRoute
 
+@Serializable
+object NotesScreenRoute
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private var permissions: Array<String> = arrayOf(Manifest.permission.RECORD_AUDIO)
@@ -47,30 +52,31 @@ class MainActivity : ComponentActivity() {
 
         ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION)
         val voiceRecordingViewModel by viewModels<VoiceRecordingViewModel>()
+        val notesViewModel by viewModels<NotesViewModel>()
         enableEdgeToEdge()
 
         setContent {
             EchoNoteTheme {
                 val navController = rememberNavController()
-                val brush = Brush.horizontalGradient(listOf(Color.Red, Color.Blue))
+                val brush = Brush.linearGradient(listOf(Color.Black,Color.DarkGray, Color.Green))
+                Surface(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Transparent)
+                    , color = Color.Transparent
+                ) {
                 Scaffold(
-                    modifier = Modifier.fillMaxSize(),
-                    containerColor = Color.Transparent,
-                    contentColor = Color.Transparent
+                    modifier = Modifier.fillMaxSize()
+
                 ) { innerPadding ->
-                    Surface(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(innerPadding)
-                            .background(brush)
-                    ) {
-                        NavHost(navController = navController, startDestination = HomeScreenRoute) {
+
+                        NavHost(navController = navController, startDestination = HomeScreenRoute, modifier = Modifier.padding(innerPadding).background(brush)) {
                             composable<HomeScreenRoute> {
                                 HomeScreen(onNavigateToVoice = {
                                     navController.navigate(
                                         VoiceRecordScreenRoute
                                     )
-                                })
+                                }, onNavigateToNotes = {navController.navigate(NotesScreenRoute)})
                             }
                             composable<VoiceRecordScreenRoute> {
                                 VoiceRecordingScreen(
@@ -78,6 +84,7 @@ class MainActivity : ComponentActivity() {
 
                                     )
                             }
+                            composable<NotesScreenRoute>{ NoteScreen(notesViewModel) }
                         }
                     }
                 }

@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.dp
 import com.echonote.ui.theme.EchoNoteTheme
 
 @Composable
-fun HomeScreen( onNavigateToVoice:()-> Unit) {
+fun HomeScreen( onNavigateToVoice:()-> Unit, onNavigateToNotes:()-> Unit) {
     val temp: String = "Shravan"
 
     Column(modifier = Modifier.fillMaxSize()) {
@@ -51,7 +51,7 @@ fun HomeScreen( onNavigateToVoice:()-> Unit) {
                 verticalArrangement = Arrangement.SpaceEvenly
             ) {
 
-                HomeButton("Add a note", onNavigate = {})
+                HomeButton("Add a note", onNavigate = {onNavigateToNotes()})
                 HomeButton("Note Templates", onNavigate = {})
                 HomeButton("Voice record", onNavigate = {onNavigateToVoice()})
             }
