@@ -36,39 +36,6 @@ fun AddNoteScreen(notesViewModel: NoteViewModel) {
     }
 }
 
-@Composable
-fun NoteCard(
-    title: String,
-    dateTime: LocalDateTime,
-    hasAIUse: Boolean,
-    pictures: List<ImageBitmap>,
-    modifier: Modifier = Modifier,
-    id: Int,
-) {
-    var noteThumbNail: ImageBitmap? = null
-    if (pictures.isNotEmpty()) noteThumbNail = pictures[0]
-    if (pictures.size > 1) {
-        // we will create a box in the center
-    }
-    Card(modifier = modifier, onClick = {}) {
-
-        Text(title, modifier = Modifier.semantics { title })
-        Text(
-            dateTime.toString(),
-            modifier = Modifier.semantics {
-                contentDescription = "Time this was last updated, ${dateTime}"
-            })
-        if (noteThumbNail != null) {
-            Row {
-                Image(
-                    bitmap = noteThumbNail,
-                    contentDescription = "This is the the image of the note",
-                    modifier = Modifier.size(20.dp)
-                )
-            }
-        }
-    }
-}
 
 @Composable
 fun InputText(textState: TextFieldState, description: String) { // adding semantics for my reference
