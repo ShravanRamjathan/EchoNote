@@ -24,12 +24,11 @@ import androidx.navigation.compose.rememberNavController
 import com.echonote.presentation.screen.HomeScreen
 import com.echonote.presentation.screen.NoteScreen
 import com.echonote.presentation.screen.VoiceRecordingScreen
-import com.echonote.presentation.viewmodel.NotesViewModel
+import com.echonote.presentation.viewmodel.MainNotesViewModel
 import com.echonote.presentation.viewmodel.VoiceRecordingViewModel
 import com.echonote.ui.theme.EchoNoteTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.serialization.Serializable
-import java.io.Serial
 
 
 private const val LOG_TAG = "AudioRecordTest"
@@ -52,7 +51,7 @@ class MainActivity : ComponentActivity() {
 
         ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION)
         val voiceRecordingViewModel by viewModels<VoiceRecordingViewModel>()
-        val notesViewModel by viewModels<NotesViewModel>()
+        val mainNotesViewModel by viewModels<MainNotesViewModel>()
         enableEdgeToEdge()
 
         setContent {
@@ -84,7 +83,7 @@ class MainActivity : ComponentActivity() {
 
                                     )
                             }
-                            composable<NotesScreenRoute>{ NoteScreen(notesViewModel) }
+                            composable<NotesScreenRoute>{ NoteScreen(mainNotesViewModel) }
                         }
                     }
                 }

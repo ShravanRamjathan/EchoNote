@@ -6,7 +6,7 @@ import androidx.compose.foundation.text.input.TextFieldState
 data class NoteState(
     val title: TextFieldState = TextFieldState(),
     val content: TextFieldState = TextFieldState(),
-    val images: List<Bitmap>  = emptyList<Bitmap>(),
+    val images: List<String>  = emptyList<String>(),
     val isAI:Boolean = false,
 
 

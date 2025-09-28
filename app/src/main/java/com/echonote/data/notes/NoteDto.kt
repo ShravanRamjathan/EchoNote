@@ -10,5 +10,5 @@ data class NotesDto(
     val title: String = "",
     val images: List<String> = emptyList<String>(),
     @Contextual
-    val created_at: LocalDateTime?
+    val created_at: LocalDateTime? = null
 )
