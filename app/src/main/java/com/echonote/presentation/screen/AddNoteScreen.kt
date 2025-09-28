@@ -23,12 +23,12 @@ import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.echonote.presentation.viewmodel.MainNotesViewModel
+import com.echonote.presentation.viewmodel.NoteViewModel
 import java.time.LocalDateTime
 
 @Composable
-fun NoteScreen(mainNotesViewModel: MainNotesViewModel) {
-    val addNoteState by mainNotesViewModel.noteState.collectAsStateWithLifecycle()
+fun AddNoteScreen(notesViewModel: NoteViewModel) {
+    val addNoteState by notesViewModel.noteState.collectAsStateWithLifecycle()
     Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally ) {
         Text("Notes", Modifier.semantics { heading() })
         InputText(addNoteState.title, "This is for the title of the note")

@@ -21,10 +21,13 @@ import androidx.core.app.ActivityCompat
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.echonote.presentation.ScreenRoutes
+import com.echonote.presentation.screen.AddNoteScreen
 import com.echonote.presentation.screen.HomeScreen
-import com.echonote.presentation.screen.NoteScreen
+import com.echonote.presentation.screen.NotesScreen
 import com.echonote.presentation.screen.VoiceRecordingScreen
 import com.echonote.presentation.viewmodel.MainNotesViewModel
+import com.echonote.presentation.viewmodel.NoteViewModel
 import com.echonote.presentation.viewmodel.VoiceRecordingViewModel
 import com.echonote.ui.theme.EchoNoteTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,14 +37,8 @@ import kotlinx.serialization.Serializable
 private const val LOG_TAG = "AudioRecordTest"
 private const val REQUEST_RECORD_AUDIO_PERMISSION = 200
 
-@Serializable
-object HomeScreenRoute
 
-@Serializable
-object VoiceRecordScreenRoute
 
-@Serializable
-object NotesScreenRoute
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private var permissions: Array<String> = arrayOf(Manifest.permission.RECORD_AUDIO)
@@ -52,38 +49,45 @@ class MainActivity : ComponentActivity() {
         ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION)
         val voiceRecordingViewModel by viewModels<VoiceRecordingViewModel>()
         val mainNotesViewModel by viewModels<MainNotesViewModel>()
+        val notesViewModel by viewModels<NoteViewModel>()
         enableEdgeToEdge()
 
         setContent {
             EchoNoteTheme {
                 val navController = rememberNavController()
-                val brush = Brush.linearGradient(listOf(Color.Black,Color.DarkGray, Color.Green))
+                val brush = Brush.linearGradient(listOf(Color.Black, Color.DarkGray, Color.Green))
                 Surface(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(Color.Transparent)
-                    , color = Color.Transparent
+                        .background(Color.Transparent), color = Color.Transparent
                 ) {
-                Scaffold(
-                    modifier = Modifier.fillMaxSize()
+                    Scaffold(
+                        modifier = Modifier.fillMaxSize()
 
-                ) { innerPadding ->
+                    ) { innerPadding ->
 
-                        NavHost(navController = navController, startDestination = HomeScreenRoute, modifier = Modifier.padding(innerPadding).background(brush)) {
-                            composable<HomeScreenRoute> {
+                        NavHost(
+                            navController = navController,
+                            startDestination = ScreenRoutes.HomeScreenRoute,
+                            modifier = Modifier
+                                .padding(innerPadding)
+                                .background(brush)
+                        ) {
+                            composable<ScreenRoutes.HomeScreenRoute> {
                                 HomeScreen(onNavigateToVoice = {
                                     navController.navigate(
-                                        VoiceRecordScreenRoute
+                                        ScreenRoutes.VoiceRecordScreenRoute
                                     )
-                                }, onNavigateToNotes = {navController.navigate(NotesScreenRoute)})
+                                }, onNavigateToNotes = { navController.navigate(ScreenRoutes.MainNotesScreenRoute) })
                             }
-                            composable<VoiceRecordScreenRoute> {
+                            composable<ScreenRoutes.VoiceRecordScreenRoute> {
                                 VoiceRecordingScreen(
                                     voiceRecordingViewModel,
 
                                     )
                             }
-                            composable<NotesScreenRoute>{ NoteScreen(mainNotesViewModel) }
+                            composable<ScreenRoutes.MainNotesScreenRoute> { NotesScreen(mainNotesViewModel) }
+                            composable<ScreenRoutes.AddNoteScreenRoute>{ AddNoteScreen(notesViewModel =notesViewModel ) }
                         }
                     }
                 }
